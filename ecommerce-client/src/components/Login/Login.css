@@ -1,0 +1,29 @@
+.loginForm{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 30%;
+    display:flex;
+    flex-direction:column;
+}
+@media(max-width:1194px){
+    .loginForm{
+        width:50%;
+    }
+}
+@media(max-width:935px){
+    .loginForm{
+        width:60%;
+    }
+}
+@media(max-width:639px){
+    .loginForm{
+        width:70%;
+    }
+}
+@media(max-width:474px){
+    .loginForm{
+        width:80%;
+    }
+}
