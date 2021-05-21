@@ -89,7 +89,7 @@ export default function PrimarySearchAppBar(props) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   useEffect(() => {
     console.log(Auth());
-    props.setIsiAuthenticated(Auth());
+    props.setIsAuthenticated(Auth());
   }, []);
   const Logout = async () => {
     const res = await axios.post("/api/logout", {
@@ -100,7 +100,7 @@ export default function PrimarySearchAppBar(props) {
 
     if (res.status === 200) {
       localStorage.removeItem("ecommerce-user");
-      props.setIsiAuthenticated(Auth());
+      props.setIsAuthenticated(Auth());
       history.push("/");
     }
   };
@@ -211,7 +211,7 @@ export default function PrimarySearchAppBar(props) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {!(props.isAuthenticated) ? (
+            {!props.isAuthenticated ? (
               <>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                   <NavLink

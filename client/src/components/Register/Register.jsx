@@ -3,18 +3,15 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import "./Register.css";
-const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+const Register = (props) => {
+  const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const [cpass, setcPass] = useState("");
   const InputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    if (name === "name") {
-      setName(value);
-    } else if (name === "email") {
-      setEmail(value);
+    if (name === "username") {
+      setUsername(value);
     } else if (name === "pass") {
       setPass(value);
     } else {
@@ -24,45 +21,39 @@ const Register = () => {
   const submitForm = async (event) => {
     event.preventDefault();
     const data = {
-      name: name,
-      email: email,
+      username: username,
       password: pass,
     };
     if (pass !== cpass) {
-      alert("passwords dont match");
+      props.setAlert("passwords dont match");
     } else {
       const res = await axios.post("/api/register", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (res.status === 200) {
-        console.log("registered successfully");
-        setName("");
-        setEmail("");
+      console.log(res.data.status);
+      if (res.data.status === 200) {
+        props.setAlert("registered successfully");
+        setUsername("");
         setPass("");
         setcPass("");
+      } else if (res.data.status === 400) {
+        props.setAlert("user exists");
       } else {
-        console.log("some error occured");
+        props.setAlert("something went wrong");
       }
     }
   };
   return (
     <>
       <form onSubmit={submitForm} className="registerForm">
+        <h1 style={{ textAlign: "center", margin: "1rem 0", color: "cyan" }}>
+          Login to Chat
+        </h1>
         <TextField
-          name="name"
-          value={name}
-          onChange={InputChange}
-          type="text"
-          style={{ margin: "20px 0" }}
-          id="outlined-basic"
-          label="Full Name"
-          variant="outlined"
-        />
-        <TextField
-          name="email"
-          value={email}
+          name="username"
+          value={username}
           onChange={InputChange}
           type="text"
           style={{ margin: "20px 0" }}

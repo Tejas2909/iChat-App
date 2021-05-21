@@ -6,14 +6,14 @@ import axios from "axios";
 import "./Login.css";
 import Auth from "../Auth";
 const Login = (props) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const history = useHistory();
   const InputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    if (name === "email") {
-      setEmail(value);
+    if (name === "username") {
+      setUsername(value);
     } else {
       setPass(value);
     }
@@ -21,7 +21,7 @@ const Login = (props) => {
   const submitForm = async (event) => {
     event.preventDefault();
     const data = {
-      email: email,
+      username: username,
       password: pass,
     };
 
@@ -30,28 +30,33 @@ const Login = (props) => {
         "Content-Type": "application/json",
       },
     });
-    if (res.status === 200) {
-      localStorage.setItem("ecommerce-user", JSON.stringify(res.data));
-      props.setIsiAuthenticated(Auth());
-      setEmail("");
+    if (res.data.status === 200) {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      props.setIsAuthenticated(Auth());
+      setUsername("");
       setPass("");
 
-      console.log("logged in successfully");
+      props.setAlert("Login Successful");
+    } else if (res.data.status === 400) {
+      props.setAlert("Invalid Credentials");
     } else {
-      console.log("some error occured");
+      props.setAlert("something went wrong");
     }
   };
   return (
     <>
       <form onSubmit={submitForm} className="loginForm">
+        <h1 style={{ textAlign: "center", margin: "1rem 0", color: "cyan" }}>
+          Login to Chat
+        </h1>
         <TextField
-          name="email"
-          value={email}
+          name="username"
+          value={username}
           onChange={InputChange}
           type="text"
           style={{ margin: "20px 0" }}
           id="outlined-basic"
-          label="Email Address"
+          label="Username"
           variant="outlined"
         />
         <TextField
