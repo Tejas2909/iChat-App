@@ -1,6 +1,6 @@
 const Auth = () => {
-  if (localStorage.getItem("ecommerce-user")) {
-    return JSON.parse(localStorage.getItem("ecommerce-user"));
+  if (localStorage.getItem("user")) {
+    return true;
   } else {
     return false;
   }

@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Alert from "../UI_Components/Alert/Alert";
+import Loading from "../UI_Components/Loading/Loading";
 import axios from "axios";
 import "./Register.css";
 const Register = (props) => {
+  const [isLoading, setIsLoading] = useState(1);
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   const [cpass, setcPass] = useState("");
+  const [filledUsername, setFillUsername] = useState(-1);
+  const [filledPassword, setFillPassword] = useState(-1);
+  const [filledConfirmPassword, setFillConfirmPassword] = useState(-1);
+  useEffect(() => {
+    setIsLoading(0);
+  }, []);
   const InputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -20,69 +29,136 @@ const Register = (props) => {
   };
   const submitForm = async (event) => {
     event.preventDefault();
-    const data = {
-      username: username,
-      password: pass,
-    };
+    if (username) {
+      setFillUsername(1);
+    }
+    if (pass) {
+      setFillPassword(1);
+    }
+    if (cpass) {
+      setFillConfirmPassword(1);
+    }
+    if (!username || !pass || !cpass) {
+      if (!username) {
+        setFillUsername(0);
+      }
+      if (!pass) {
+        setFillPassword(0);
+      }
+      if (!cpass) {
+        setFillConfirmPassword(0);
+      }
+      return;
+    }
     if (pass !== cpass) {
       props.setAlert("passwords dont match");
     } else {
+      const data = {
+        username: username,
+        password: pass,
+      };
+      setIsLoading(1);
       const res = await axios.post("/api/register", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(res.data.status);
       if (res.data.status === 200) {
         props.setAlert("registered successfully");
-        setUsername("");
-        setPass("");
-        setcPass("");
       } else if (res.data.status === 400) {
         props.setAlert("user exists");
       } else {
         props.setAlert("something went wrong");
       }
     }
+    setIsLoading(0);
   };
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
+      <Alert setAlert={props.setAlert} alert={props.alert} />
       <form onSubmit={submitForm} className="registerForm">
         <h1 style={{ textAlign: "center", margin: "1rem 0", color: "cyan" }}>
-          Login to Chat
+          Register to Chat
         </h1>
-        <TextField
-          name="username"
-          value={username}
-          onChange={InputChange}
-          type="text"
-          style={{ margin: "20px 0" }}
-          id="outlined-basic"
-          label="Email Address"
-          variant="outlined"
-        />
-        <TextField
-          name="pass"
-          value={pass}
-          onChange={InputChange}
-          type="password"
-          style={{ margin: "20px 0" }}
-          id="outlined-basic"
-          label="Password"
-          variant="outlined"
-        />
-        <TextField
-          name="cpass"
-          value={cpass}
-          onChange={InputChange}
-          type="password"
-          style={{ margin: "20px 0" }}
-          id="outlined-basic"
-          label="Confirm Password"
-          variant="outlined"
-        />
+        <div className="textField">
+          <TextField
+            name="username"
+            value={username}
+            onChange={InputChange}
+            type="text"
+            style={{ margin: "1rem 0" }}
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
+          />
+          {!filledUsername ? (
+            <>
+              <small
+                style={{
+                  position: "absolute",
+                  bottom: "-0.2rem",
+                  color: "red",
+                }}
+              >
+                Username field is required
+              </small>
+            </>
+          ) : null}
+        </div>
+        <div className="textField">
+          <TextField
+            name="pass"
+            value={pass}
+            onChange={InputChange}
+            type="password"
+            style={{ margin: "1rem 0" }}
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+          />
+          {!filledPassword ? (
+            <>
+              <small
+                style={{
+                  position: "absolute",
+                  bottom: "-0.2rem",
+                  color: "red",
+                }}
+              >
+                Password field is required
+              </small>
+            </>
+          ) : null}
+        </div>
+        <div className="textField">
+          <TextField
+            name="cpass"
+            value={cpass}
+            onChange={InputChange}
+            type="password"
+            style={{ margin: "1rem 0" }}
+            id="outlined-basic"
+            label="Confirm Password"
+            variant="outlined"
+          />
+          {!filledConfirmPassword ? (
+            <>
+              <small
+                style={{
+                  position: "absolute",
+                  bottom: "-0.2rem",
+                  color: "red",
+                }}
+              >
+                Confirm Password field is required
+              </small>
+            </>
+          ) : null}
+        </div>
         <Button
-          style={{ margin: "20px 0", padding: "10px 0" }}
+          style={{ margin: "1rem 0", padding: "1rem 0" }}
           variant="contained"
           color="primary"
           type="submit"

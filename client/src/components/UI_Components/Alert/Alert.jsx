@@ -10,12 +10,9 @@ const DismissibleAlert = (props) => {
 
   const { vertical, horizontal, open } = state;
 
-  const handleClick = (newState) => () => {
-    setState({ open: true, ...newState });
-  };
-
   const handleClose = () => {
     setState({ ...state, open: false });
+    props.setAlert("");
   };
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -23,7 +20,9 @@ const DismissibleAlert = (props) => {
   useEffect(() => {
     setState({ open: true, ...{ vertical: "top", horizontal: "center" } });
   }, []);
-  if (props.alert === "user exists") {
+  if (props.alert === "") {
+    return null;
+  } else if (props.alert === "not logged in") {
     return (
       <div>
         <Snackbar
@@ -35,7 +34,43 @@ const DismissibleAlert = (props) => {
           message="I love snacks"
           key={vertical + horizontal}
         >
-          <Alert onClose={handleClose} severity="success">
+          <Alert onClose={handleClose} severity="info">
+            Please Login to enter chat room
+          </Alert>
+        </Snackbar>
+      </div>
+    );
+  } else if (props.alert === "logout failed") {
+    return (
+      <div>
+        <Snackbar
+          autoHideDuration={6000}
+          severity="error"
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="I love snacks"
+          key={vertical + horizontal}
+        >
+          <Alert onClose={handleClose} severity="error">
+            Logout Failed
+          </Alert>
+        </Snackbar>
+      </div>
+    );
+  } else if (props.alert === "user exists") {
+    return (
+      <div>
+        <Snackbar
+          autoHideDuration={6000}
+          severity="error"
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="I love snacks"
+          key={vertical + horizontal}
+        >
+          <Alert onClose={handleClose} severity="info">
             Alerady registered with this name!!
           </Alert>
         </Snackbar>
@@ -59,7 +94,25 @@ const DismissibleAlert = (props) => {
         </Snackbar>
       </div>
     );
-  } else if (props.alert == "Login Successful") {
+  } else if (props.alert === "logout successful") {
+    return (
+      <div>
+        <Snackbar
+          autoHideDuration={6000}
+          severity="error"
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="I love snacks"
+          key={vertical + horizontal}
+        >
+          <Alert onClose={handleClose} severity="success">
+            Logout Successful!!
+          </Alert>
+        </Snackbar>
+      </div>
+    );
+  } else if (props.alert === "Login Successful") {
     return (
       <div>
         <Snackbar
@@ -77,7 +130,7 @@ const DismissibleAlert = (props) => {
         </Snackbar>
       </div>
     );
-  } else if (props.alert == "Invalid Credentials") {
+  } else if (props.alert === "Invalid Credentials") {
     return (
       <div>
         <Snackbar

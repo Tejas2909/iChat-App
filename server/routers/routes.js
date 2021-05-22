@@ -1,9 +1,12 @@
 const express = require("express");
 router = express.Router();
 const Registration = require("../controllers/Registration");
+const Auth = require("../middlewares/Auth");
 const Login = require("../controllers/Login");
 const Logout = require("../controllers/Logout");
+const Chat = require("../controllers/Chat");
 router.post("/register", Registration);
 router.post("/login", Login);
 router.post("/logout", Logout);
+router.post("/chat", Auth, Chat);
 module.exports = router;

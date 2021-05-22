@@ -1,8 +1,8 @@
 const User = require("../models/Users");
+
 const Registeration = async (req, res) => {
   const user = new User(req.body);
   const userExist = await User.findOne({ username: req.body.username });
-
   if (!userExist) {
     user
       .save()

@@ -1,5 +1,5 @@
 .loginForm{
-    padding:3rem 5rem;
+    padding:1rem 5rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -9,6 +9,12 @@
     flex-direction:column;
     border-radius: 1rem;
     box-shadow: 1px 1px 4px 5px rgba(0,0,0,0.09);
+}
+.textField{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin:0;
 }
 @media(max-width:1194px){
     .loginForm{

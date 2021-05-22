@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Logo from "../../../assets/images/Logo.png";
 import { NavLink, useHistory } from "react-router-dom";
 import Auth from "../../Auth";
 import axios from "axios";
+import Loading from "../Loading/Loading";
+
 import "./Navbar.css";
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -85,13 +83,14 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   useEffect(() => {
-    console.log(Auth());
     props.setIsAuthenticated(Auth());
   }, []);
   const Logout = async () => {
+    setIsLoading(1);
     const res = await axios.post("/api/logout", {
       headers: {
         "Content-Type": "application/json",
@@ -99,17 +98,17 @@ export default function PrimarySearchAppBar(props) {
     });
 
     if (res.status === 200) {
-      localStorage.removeItem("ecommerce-user");
+      localStorage.removeItem("user");
       props.setIsAuthenticated(Auth());
       history.push("/");
+      props.setAlert("logout successful");
+    } else {
+      props.setAlert("logout failed");
     }
+    setIsLoading(0);
   };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -143,6 +142,7 @@ export default function PrimarySearchAppBar(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
+      style={{ padding: "1rem 2.3rem" }}
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
@@ -151,37 +151,32 @@ export default function PrimarySearchAppBar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {!props.isAuthenticated ? (
+        <>
+          <MenuItem>Login</MenuItem>
+          <MenuItem>Register</MenuItem>
+        </>
+      ) : (
+        <>
+          <Button
+            style={{
+              color: "black",
+              textDecoration: "none",
+              margin: "1rem",
+              textTransform: "capitalize!important",
+            }}
+          >
+            Chat Room
+          </Button>
+          <MenuItem onClick={Logout}>Logout</MenuItem>
+        </>
+      )}
     </Menu>
   );
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
@@ -193,22 +188,13 @@ export default function PrimarySearchAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
+          <img
+            style={{ width: "3%", borderRadius: "50%", margin: "0 1rem" }}
+            src={Logo}
+          />
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            Chat Application
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {!props.isAuthenticated ? (
@@ -242,6 +228,26 @@ export default function PrimarySearchAppBar(props) {
               </>
             ) : (
               <>
+                <NavLink
+                  to="/chat_screen"
+                  style={{
+                    fontSize: "20px",
+                    color: "white",
+                    textDecoration: "none",
+                    textTransform: "capitalize!important",
+                  }}
+                >
+                  <IconButton
+                    style={{
+                      fontSize: "20px",
+                      color: "white",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Chat Room
+                  </IconButton>
+                </NavLink>
+
                 <IconButton
                   onClick={Logout}
                   style={{
@@ -255,26 +261,6 @@ export default function PrimarySearchAppBar(props) {
                 </IconButton>
               </>
             )}
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

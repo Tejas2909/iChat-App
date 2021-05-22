@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+
 const bycryptjs = require("bcryptjs");
 const User = require("../models/Users");
 const Login = async (req, res) => {
@@ -20,9 +21,9 @@ const Login = async (req, res) => {
             process.env.SECRET_KEY
           );
           res.cookie("auth", token, {
-            expires: new Date(Date.now() + 9999),
+            expires: new Date(Date.now() + 999999999),
           });
-          res.json(userExist);
+          res.json({ status: 200, msg: userExist, token: token });
         } catch (err) {
           res.json({ status: 400, msg: "not logged in" });
         }
