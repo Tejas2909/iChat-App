@@ -9,6 +9,14 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  rooms: [
+    {
+      room: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 UserSchema.pre("save", async function (req, res, next) {
   this.password = await bycryptjs.hash(this.password, 12);

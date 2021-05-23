@@ -11,7 +11,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Logo from "../../../assets/images/Logo.png";
 import { NavLink, useHistory } from "react-router-dom";
-import Auth from "../../Auth";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 
@@ -86,9 +85,6 @@ export default function PrimarySearchAppBar(props) {
   const [isLoading, setIsLoading] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  useEffect(() => {
-    props.setIsAuthenticated(Auth());
-  }, []);
   const Logout = async () => {
     setIsLoading(1);
     const res = await axios.post("/api/logout", {
@@ -99,9 +95,11 @@ export default function PrimarySearchAppBar(props) {
 
     if (res.status === 200) {
       localStorage.removeItem("user");
-      props.setIsAuthenticated(Auth());
+      props.setIsAuthenticated(false);
       history.push("/");
       props.setAlert("logout successful");
+      props.setUsername(null);
+      props.setToken(null);
     } else {
       props.setAlert("logout failed");
     }
@@ -174,9 +172,7 @@ export default function PrimarySearchAppBar(props) {
     </Menu>
   );
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
@@ -193,6 +189,7 @@ export default function PrimarySearchAppBar(props) {
             src={Logo}
           />
           <Typography className={classes.title} variant="h6" noWrap>
+            {props.username ? <>Welcome {props.username} to </> : null}
             Chat Application
           </Typography>
           <div className={classes.grow} />

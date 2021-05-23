@@ -6,7 +6,6 @@ import Alert from "../UI_Components/Alert/Alert";
 import Loading from "../UI_Components/Loading/Loading";
 import axios from "axios";
 import "./Login.css";
-import Auth from "../Auth";
 const Login = (props) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(1);
@@ -54,12 +53,12 @@ const Login = (props) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(res);
     if (res.data.status === 200) {
-      localStorage.setItem("user", JSON.stringify(res.data));
-      props.setIsAuthenticated(Auth());
+      props.setIsAuthenticated(true);
       history.push("/");
       props.setAlert("Login Successful");
+      props.setUsername(res.data.msg.username);
+      props.setToken(res.data.token);
     } else if (res.data.status === 400) {
       props.setAlert("Invalid Credentials");
     } else {

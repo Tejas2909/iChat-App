@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-
 const bycryptjs = require("bcryptjs");
 const User = require("../models/Users");
 const Login = async (req, res) => {
@@ -30,7 +29,7 @@ const Login = async (req, res) => {
       }
     }
   } catch (err) {
-    res.json({ status: 500, msg: "something went wrong" });
+    res.status(500).json({ status: 500, msg: "something went wrong" });
   }
 };
 module.exports = Login;

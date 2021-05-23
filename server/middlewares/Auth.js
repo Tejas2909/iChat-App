@@ -9,7 +9,12 @@ const Auth = async (req, res, next) => {
       if (!user) {
         res.json({ status: 400, msg: "not yet registered" });
       } else {
-        next();
+        res.json({
+          status: 200,
+          msg: "authenticated",
+          username: user.username,
+          token: token,
+        });
       }
     } catch (err) {
       res.json({ status: 500, msg: "something went wrong" });

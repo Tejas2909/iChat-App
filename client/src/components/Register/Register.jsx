@@ -3,9 +3,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Alert from "../UI_Components/Alert/Alert";
 import Loading from "../UI_Components/Loading/Loading";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 const Register = (props) => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(1);
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
@@ -65,6 +67,7 @@ const Register = (props) => {
       });
       if (res.data.status === 200) {
         props.setAlert("registered successfully");
+        history.push("/login");
       } else if (res.data.status === 400) {
         props.setAlert("user exists");
       } else {

@@ -5,6 +5,8 @@ const Auth = require("../middlewares/Auth");
 const Login = require("../controllers/Login");
 const Logout = require("../controllers/Logout");
 const Chat = require("../controllers/Chat");
+const checkAuthentication = require("../controllers/checkAuthentication");
+router.post("/", Auth, checkAuthentication);
 router.post("/register", Registration);
 router.post("/login", Login);
 router.post("/logout", Logout);

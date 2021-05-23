@@ -4,23 +4,31 @@ import SendIcon from "@material-ui/icons/Send";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Loading from "../UI_Components/Loading/Loading";
+import io from "socket.io-client";
 import "./style.css";
+let socket;
 const ChatScreen = (props) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(1);
-  const user = JSON.parse(localStorage.getItem("user"));
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const sendMsg = (event) => {
+  useEffect(() => {
+    socket = io();
+  }, []);
+  const sendMsg = async (event) => {
     event.preventDefault();
+    const msg = {
+      message: message,
+    };
+    socket.emit("send_message", msg);
     setMessage("");
   };
   const getChatData = async () => {
-    if (user == undefined || user === null) {
+    if (props.username === undefined || props.username === null) {
       history.push("/");
       props.setAlert("not logged in");
     } else {
-      const token = user.token;
+      const token = props.token;
       const res = await axios.post("/api/chat", {
         headers: {
           "Content-Type": "application/json",
@@ -41,15 +49,7 @@ const ChatScreen = (props) => {
     <>
       <div className="mainChatSection">
         <div className="innerChatSection">
-          <div id="messageBox" className="messageBox">
-            {messages.map((message) => {
-              if (message.username === user.msg.username) {
-                return <div className="user">{message.message}</div>;
-              } else {
-                return <div className="other-user">{message.message}</div>;
-              }
-            })}
-          </div>
+          <div id="messageBox" className="messageBox"></div>
           <form
             onSubmit={sendMsg}
             style={{
@@ -85,6 +85,8 @@ const ChatScreen = (props) => {
               </div>
               <div className="sendButton">
                 <Button
+                  disabled={!message}
+                  type="submit"
                   style={{ borderRadius: "50%", padding: "1rem 0rem" }}
                   variant="contained"
                   color="secondary"
