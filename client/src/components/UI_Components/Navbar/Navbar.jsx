@@ -151,8 +151,36 @@ export default function PrimarySearchAppBar(props) {
     >
       {!props.isAuthenticated ? (
         <>
-          <MenuItem>Login</MenuItem>
-          <MenuItem>Register</MenuItem>
+          <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <NavLink
+                activeClassName="activeLink"
+                style={{
+                  fontSize: "20px",
+                  color: "black",
+                  textDecoration: "none",
+                }}
+                to="/login"
+              >
+                Login
+              </NavLink>
+            </IconButton>
+          </MenuItem>
+          <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <NavLink
+                activeClassName="activeLink"
+                style={{
+                  fontSize: "20px",
+                  color: "black",
+                  textDecoration: "none",
+                }}
+                to="/register"
+              >
+                Register
+              </NavLink>
+            </IconButton>
+          </MenuItem>
         </>
       ) : (
         <>
@@ -161,7 +189,7 @@ export default function PrimarySearchAppBar(props) {
               to="/chat_screen"
               style={{
                 fontSize: "20px",
-                color: "white",
+                color: "black",
                 textDecoration: "none",
                 textTransform: "capitalize!important",
               }}
@@ -169,7 +197,7 @@ export default function PrimarySearchAppBar(props) {
               <IconButton
                 style={{
                   fontSize: "20px",
-                  color: "white",
+                  color: "black",
                   textDecoration: "none",
                 }}
               >
@@ -178,7 +206,19 @@ export default function PrimarySearchAppBar(props) {
             </NavLink>
           </MenuItem>
 
-          <MenuItem onClick={Logout}>Logout</MenuItem>
+          <MenuItem>
+            <IconButton
+              onClick={Logout}
+              style={{
+                fontSize: "20px",
+                color: "black",
+                textDecoration: "none",
+              }}
+              aria-label="show 4 new mails"
+            >
+              Logout
+            </IconButton>
+          </MenuItem>
         </>
       )}
     </Menu>
@@ -196,10 +236,7 @@ export default function PrimarySearchAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <img
-            style={{ width: "3%", borderRadius: "50%", margin: "0 1rem" }}
-            src={Logo}
-          />
+          <img className="AppLogo" src={Logo} />
           <Typography className={classes.title} variant="h6" noWrap>
             {props.username ? <>Welcome {props.username} to </> : null}
             Chat Application

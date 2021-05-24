@@ -10,12 +10,17 @@ import Alert from "../UI_Components/Alert/Alert";
 let socket = io();
 const ChatScreen = (props) => {
   const history = useHistory();
+
   const [isLoading, setIsLoading] = useState(1);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    console.log("messages");
-    console.log(messages);
+    const messageBox = document.getElementById("messageBox");
+    if (messageBox !== null) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+
+    setIsLoading(0);
   }, [messages]);
   useEffect(() => {
     socket.on("recieve-error", (msg) => {
@@ -42,7 +47,6 @@ const ChatScreen = (props) => {
       setMessages([...messages, msg]);
       socket.emit("send-message", msg);
     }
-
     setMessage("");
   };
   const getChatData = async () => {
@@ -58,8 +62,8 @@ const ChatScreen = (props) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setMessages([...messages, res.data.messages]);
-        setIsLoading(0);
+        setMessages(res.data.messages);
+
         history.push("/chat_screen");
       } catch (err) {
         props.setAlert("something went wrong");
@@ -77,7 +81,7 @@ const ChatScreen = (props) => {
       <div className="mainChatSection">
         <div className="innerChatSection">
           <div id="messageBox" className="messageBox">
-            {messages[0].map((message) => {
+            {messages.map((message) => {
               if (message === undefined || message === null) {
                 return null;
               } else if (message.username === props.username) {
@@ -89,6 +93,7 @@ const ChatScreen = (props) => {
                       style={{
                         borderBottom: "1px solid rgba(255,255,255,0.5)",
                         padding: "0.2rem 1rem 0.2rem 0.5rem",
+                        color: "rgba(255,255,255,0.7)",
                       }}
                     >
                       {message.username}
