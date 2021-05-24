@@ -48,22 +48,27 @@ const Login = (props) => {
       password: pass,
     };
     setIsLoading(1);
-    const res = await axios.post("/api/login", data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.data.status === 200) {
-      props.setIsAuthenticated(true);
-      history.push("/");
-      props.setAlert("Login Successful");
-      props.setUsername(res.data.msg.username);
-      props.setToken(res.data.token);
-    } else if (res.data.status === 400) {
-      props.setAlert("Invalid Credentials");
-    } else {
+    try {
+      const res = await axios.post("/api/login", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.data.status === 200) {
+        props.setIsAuthenticated(true);
+        history.push("/");
+        props.setAlert("Login Successful");
+        props.setUsername(res.data.msg.username);
+        props.setToken(res.data.token);
+      } else if (res.data.status === 400) {
+        props.setAlert("Invalid Credentials");
+      } else {
+        props.setAlert("something went wrong");
+      }
+    } catch (err) {
       props.setAlert("something went wrong");
     }
+
     setIsLoading(0);
   };
   return isLoading ? (

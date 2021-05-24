@@ -16,3 +16,23 @@ const server = app.listen(PORT, () => {
   console.log(`server running at port ${PORT}`);
 });
 const io = socket(server);
+let users = {};
+io.on("connection", (socket) => {
+  socket.on("user-joined", (name) => {
+    users[socket.id] = name;
+    if (name !== null) {
+      socket.broadcast.emit("new-user-joined", name);
+    }
+  });
+  socket.on("send-message", (msg) => {
+    if (msg.username !== null) {
+      console.log(msg);
+      socket.broadcast.emit("recieve-message", msg);
+    }
+  });
+  socket.on("disconnect", () => {
+    if (users[socket.id] !== null) {
+      socket.broadcast.emit("user-left", users[socket.id]);
+    }
+  });
+});

@@ -12,32 +12,28 @@ const ChatScreen = (props) => {
   const [isLoading, setIsLoading] = useState(1);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    socket = io();
-  }, []);
   const sendMsg = async (event) => {
     event.preventDefault();
-    const msg = {
-      message: message,
-    };
-    socket.emit("send_message", msg);
-    setMessage("");
   };
   const getChatData = async () => {
     if (props.username === undefined || props.username === null) {
-      history.push("/");
       props.setAlert("not logged in");
+      history.push("/");
     } else {
-      const token = props.token;
-      const res = await axios.post("/api/chat", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setMessages([...messages, res.data.messages]);
-      setIsLoading(0);
-      history.push("/chat_screen");
+      try {
+        const token = props.token;
+        const res = await axios.post("/api/chat", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMessages([...messages, res.data.messages]);
+        setIsLoading(0);
+        history.push("/chat_screen");
+      } catch (err) {
+        props.setAlert("something went wrong");
+      }
     }
   };
   useEffect(() => {
@@ -75,6 +71,7 @@ const ChatScreen = (props) => {
                       outline: "none",
                       border: "none",
                       fontWeight: "bold",
+                      fontSize: "1rem",
                     }}
                     type="text"
                     className="form-control"

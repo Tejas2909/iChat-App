@@ -60,17 +60,21 @@ const Register = (props) => {
         password: pass,
       };
       setIsLoading(1);
-      const res = await axios.post("/api/register", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.data.status === 200) {
-        props.setAlert("registered successfully");
-        history.push("/login");
-      } else if (res.data.status === 400) {
-        props.setAlert("user exists");
-      } else {
+      try {
+        const res = await axios.post("/api/register", data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.data.status === 200) {
+          props.setAlert("registered successfully");
+          history.push("/login");
+        } else if (res.data.status === 400) {
+          props.setAlert("user exists");
+        } else {
+          props.setAlert("something went wrong");
+        }
+      } catch (err) {
         props.setAlert("something went wrong");
       }
     }
