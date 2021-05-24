@@ -13,15 +13,34 @@ const ChatScreen = (props) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    socket.emit("user-joined", props.username);
+    console.log(messages);
+  }, [messages]);
+  useEffect(() => {
+    if (props.username !== null) {
+      socket.emit("user-joined", props.username);
+    }
     socket.on("new-user-joined", (name) => {
-      console.log(`${name} joined the chat`);
+      if (name !== null) {
+        const msg = {
+          username: "notification",
+          message: `${name} joined the chat`,
+        };
+        setMessages([...messages, msg]);
+      }
     });
     socket.on("user-left", (name) => {
-      console.log(`${name} left the chat`);
+      if (name !== null) {
+        const msg = {
+          username: "notification",
+          message: `${name} left the chat`,
+        };
+        setMessages([...messages, msg]);
+      }
     });
     socket.on("recieve-message", (msg) => {
-      console.log(msg);
+      if (msg.username !== null) {
+        setMessages([...messages, msg]);
+      }
     });
   }, []);
   const sendMsg = async (event) => {
@@ -30,6 +49,9 @@ const ChatScreen = (props) => {
       username: props.username,
       message: message,
     };
+    if (msg.username !== null) {
+      setMessages([...messages, msg]);
+    }
     socket.emit("send-message", msg);
     setMessage("");
   };
