@@ -26,7 +26,6 @@ io.on("connection", (socket) => {
   });
   socket.on("send-message", (msg) => {
     if (msg.username !== null) {
-      console.log(msg);
       socket.broadcast.emit("recieve-message", msg);
     }
   });

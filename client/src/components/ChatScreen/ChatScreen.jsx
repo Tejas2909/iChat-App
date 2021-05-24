@@ -6,14 +6,32 @@ import { useHistory } from "react-router-dom";
 import Loading from "../UI_Components/Loading/Loading";
 import io from "socket.io-client";
 import "./style.css";
-let socket;
+let socket = io();
 const ChatScreen = (props) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(1);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    socket.emit("user-joined", props.username);
+    socket.on("new-user-joined", (name) => {
+      console.log(`${name} joined the chat`);
+    });
+    socket.on("user-left", (name) => {
+      console.log(`${name} left the chat`);
+    });
+    socket.on("recieve-message", (msg) => {
+      console.log(msg);
+    });
+  }, []);
   const sendMsg = async (event) => {
     event.preventDefault();
+    const msg = {
+      username: props.username,
+      message: message,
+    };
+    socket.emit("send-message", msg);
+    setMessage("");
   };
   const getChatData = async () => {
     if (props.username === undefined || props.username === null) {

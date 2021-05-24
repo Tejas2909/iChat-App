@@ -156,16 +156,28 @@ export default function PrimarySearchAppBar(props) {
         </>
       ) : (
         <>
-          <Button
-            style={{
-              color: "black",
-              textDecoration: "none",
-              margin: "1rem",
-              textTransform: "capitalize!important",
-            }}
-          >
-            Chat Room
-          </Button>
+          <MenuItem>
+            <NavLink
+              to="/chat_screen"
+              style={{
+                fontSize: "20px",
+                color: "white",
+                textDecoration: "none",
+                textTransform: "capitalize!important",
+              }}
+            >
+              <IconButton
+                style={{
+                  fontSize: "20px",
+                  color: "white",
+                  textDecoration: "none",
+                }}
+              >
+                Chat Room
+              </IconButton>
+            </NavLink>
+          </MenuItem>
+
           <MenuItem onClick={Logout}>Logout</MenuItem>
         </>
       )}
