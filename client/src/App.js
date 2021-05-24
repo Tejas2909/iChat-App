@@ -21,7 +21,6 @@ const App = () => {
         credentials: "include",
       },
     });
-    console.log(res);
     if (res.data.status === 200) {
       setIsAuthenticated(true);
       setToken(res.data.token);

@@ -1,6 +1,10 @@
 const Message = require("../models/Messages");
 const Chat = async (req, res) => {
-  const messages = await Message.find();
-  res.status(200).json({ status: 200, messages: messages });
+  try {
+    const messages = await Message.find();
+    res.json({ status: 200, messages: messages });
+  } catch (err) {
+    res.json({ status: 250, msg: "error" });
+  }
 };
 module.exports = Chat;

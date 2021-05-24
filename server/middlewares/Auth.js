@@ -9,12 +9,9 @@ const Auth = async (req, res, next) => {
       if (!user) {
         res.json({ status: 400, msg: "not yet registered" });
       } else {
-        res.json({
-          status: 200,
-          msg: "authenticated",
-          username: user.username,
-          token: token,
-        });
+        res.token = token;
+        res.username = user.username;
+        next();
       }
     } catch (err) {
       res.json({ status: 500, msg: "something went wrong" });

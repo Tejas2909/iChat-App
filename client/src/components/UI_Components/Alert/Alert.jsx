@@ -179,7 +179,7 @@ const DismissibleAlert = (props) => {
           key={vertical + horizontal}
         >
           <Alert onClose={handleClose} severity="error">
-            Something went Wrong!!
+            Something went Wrong!! Try Again
           </Alert>
         </Snackbar>
       </div>
