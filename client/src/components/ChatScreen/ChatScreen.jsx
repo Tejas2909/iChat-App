@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Loading from "../UI_Components/Loading/Loading";
@@ -14,12 +15,19 @@ const ChatScreen = (props) => {
   const [isLoading, setIsLoading] = useState(1);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [buttonVisibility, setButtonVisibility] = useState(0);
+  useEffect(() => {
+    if (message.length > 0) {
+      setButtonVisibility(1);
+    } else {
+      setButtonVisibility(0);
+    }
+  }, [message]);
   useEffect(() => {
     const messageBox = document.getElementById("messageBox");
     if (messageBox !== null) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
-
     setIsLoading(0);
   }, [messages]);
   useEffect(() => {
@@ -36,7 +44,12 @@ const ChatScreen = (props) => {
       }
     });
   });
-
+  const scrollDown = () => {
+    const messageBox = document.getElementById("messageBox");
+    if (messageBox !== null) {
+      messageBox.scrollTop = messageBox.scrollHeight;
+    }
+  };
   const sendMsg = (event) => {
     event.preventDefault();
     const msg = {
@@ -80,6 +93,7 @@ const ChatScreen = (props) => {
       <Alert alert={props.alert} setAlert={props.setAlert} />
       <div className="mainChatSection">
         <div className="innerChatSection">
+          <ArrowDropDownIcon onClick={scrollDown} className="scrollDown" />
           <div id="messageBox" className="messageBox">
             {messages.map((message) => {
               if (message === undefined || message === null) {
@@ -124,13 +138,14 @@ const ChatScreen = (props) => {
               <div className="textField">
                 <div className="form-input">
                   <input
+                    className="messageInputField"
                     onChange={(event) => {
                       setMessage(event.target.value);
                     }}
                     value={message}
                     style={{
                       borderRadius: "1rem",
-                      width: "80%",
+                      width: "95.7%",
                       margin: "auto",
                       padding: "0.4rem 0.3rem",
                       outline: "none",
@@ -145,17 +160,18 @@ const ChatScreen = (props) => {
                   />
                 </div>
               </div>
-              <div className="sendButton">
-                <Button
-                  disabled={!message}
-                  type="submit"
-                  style={{ borderRadius: "50%", padding: "1rem 0rem" }}
-                  variant="contained"
-                  color="secondary"
-                >
-                  <SendIcon />
-                </Button>
-              </div>
+              {buttonVisibility ? (
+                <>
+                  <button
+                    className="sendButton"
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                  >
+                    <SendIcon />
+                  </button>
+                </>
+              ) : null}
             </div>
           </form>
         </div>

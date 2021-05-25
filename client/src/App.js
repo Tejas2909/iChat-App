@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Landing from "./components/Landing/Landing";
 import ChatScreen from "./components/ChatScreen/ChatScreen";
+import Alert from "./components/UI_Components/Alert/Alert";
 import Loading from "./components/UI_Components/Loading/Loading";
 import axios from "axios";
 import "./App.css";
@@ -15,26 +16,32 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [alert, setAlert] = useState("");
   const checkAuthentication = async () => {
-    const res = await axios.post("/api/", {
-      headers: {
-        "Content-Type": "application/json",
-        credentials: "include",
-      },
-    });
-    if (res.data.status === 200) {
-      setIsAuthenticated(true);
-      setToken(res.data.token);
-      setUsername(res.data.username);
+    try {
+      const res = await axios.post("/api/", {
+        headers: {
+          "Content-Type": "application/json",
+          credentials: "include",
+        },
+      });
+      if (res.data.status === 200) {
+        setIsAuthenticated(true);
+        setToken(res.data.token);
+        setUsername(res.data.username);
+      }
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setAlert("something went wrong");
     }
-    setIsLoading(false);
   };
   useEffect(() => {
     checkAuthentication();
   }, []);
   return isLoading ? (
-    <Loading />
+    <Loading alert={alert} />
   ) : (
     <>
+      <Alert alert={alert} setAlert={setAlert} />
       <Navbar
         alert={alert}
         setAlert={setAlert}

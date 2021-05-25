@@ -6,4 +6,32 @@
 }
 body{
   overflow:hidden;
+  letter-spacing: 0.15rem;
+}
+@media(max-width:800px){
+  html{
+    font-size:70%;
+  }
+  .submitBtn{
+    padding:2rem 0!important;
+    border-radius: 50% !important;
+  }
+}
+@media(max-width:621px){
+  html{
+    font-size:50%;
+  }
+  .scrollDown{
+    bottom: 3rem!important;
+    right: 0.3rem !important;
+  }
+}
+@media(max-width:395px){
+  html{
+    font-size:40%;
+  }
+  .scrollDown{
+    bottom:-1rem!important;
+    right: 0rem !important;
+  }
 }

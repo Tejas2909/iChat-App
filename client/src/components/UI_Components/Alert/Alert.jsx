@@ -148,24 +148,6 @@ const DismissibleAlert = (props) => {
         </Snackbar>
       </div>
     );
-  } else if ("passwords dont match") {
-    return (
-      <div>
-        <Snackbar
-          autoHideDuration={6000}
-          severity="error"
-          anchorOrigin={{ vertical, horizontal }}
-          open={open}
-          onClose={handleClose}
-          message="I love snacks"
-          key={vertical + horizontal}
-        >
-          <Alert onClose={handleClose} severity="error">
-            Passwords dont match!!
-          </Alert>
-        </Snackbar>
-      </div>
-    );
   } else if (props.alert === "something went wrong") {
     return (
       <div>
@@ -184,8 +166,24 @@ const DismissibleAlert = (props) => {
         </Snackbar>
       </div>
     );
-  } else {
-    return null;
+  } else if ("passwords dont match") {
+    return (
+      <div>
+        <Snackbar
+          autoHideDuration={6000}
+          severity="error"
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="I love snacks"
+          key={vertical + horizontal}
+        >
+          <Alert onClose={handleClose} severity="error">
+            Passwords dont match!!
+          </Alert>
+        </Snackbar>
+      </div>
+    );
   }
 };
 export default DismissibleAlert;

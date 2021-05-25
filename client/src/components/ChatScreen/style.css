@@ -24,6 +24,7 @@ justify-content:center;
 align-items:center;
 width:100%;
 height:90.6vh;
+position: relative;
 }
 .messageBox{
     width:80%;
@@ -40,7 +41,7 @@ height:90.6vh;
     width:80%;
 }
 .form-input{
-    width:100%;
+    width:97%;
     padding:0.3rem 0rem 0.3rem 1rem;
     background-color:white;
     border-radius:10rem;
@@ -50,10 +51,18 @@ margin:1rem 0.3rem 1rem 0;
 flex:1;
 }
 .sendButton{
-margin:1rem 0rem 1rem 1.2rem;
+    border-radius:50%;
+    padding:0.7rem;
+    outline: none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border: none;
+    color:white;
+    background-color:#f50057;
 }
 .user{
-background-color: #3f51b5;
+background-color:#1c1db4;
 margin:1.7rem 1.4rem!important;
 padding:0.7rem 1.2rem!important;
 border-radius : 0.4rem !important;
@@ -77,8 +86,21 @@ word-break: break-all
     max-width: 40%;
     word-break: break-all
 }
+.scrollDown{
+    position:absolute;
+    bottom:2rem;
+    padding:0.3rem;
+    right: 2rem;
+    font-size: 2rem !important;
+    color:white !important;
+    background-color:#f50057!important;
+    border-radius:50%;
+}
+.scrollDown:hover{
+    cursor: pointer;
+}
 .notification{
-    background-color: rgb(248, 41, 155);
+    background-color: rgb(57 146 217);
     margin:1.7rem auto!important;
     padding:0.7rem 1.2rem!important;
     border-radius : 0.4rem !important;
