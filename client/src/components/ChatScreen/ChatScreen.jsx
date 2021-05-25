@@ -6,6 +6,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Loading from "../UI_Components/Loading/Loading";
 import io from "socket.io-client";
+import ding from "../../assets/Audio/ding.mp3";
 import "./style.css";
 import Alert from "../UI_Components/Alert/Alert";
 let socket = io();
@@ -40,6 +41,8 @@ const ChatScreen = (props) => {
   useEffect(() => {
     socket.on("recieve-message", (msg) => {
       if (msg.username !== null) {
+        const audio = new Audio(ding);
+        audio.play();
         setMessages([...messages, msg]);
       }
     });
