@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import Alert from "../UI_Components/Alert/Alert";
 import Loading from "../UI_Components/Loading/Loading";
 import axios from "axios";
@@ -138,6 +138,12 @@ const Login = (props) => {
         >
           Login
         </Button>
+        <h4
+          style={{ textAlign: "center", margin: "1rem 0", fontSize: "1.3rem" }}
+        >
+          If not registered then please do&nbsp;
+          <NavLink to="/register">register</NavLink>
+        </h4>
       </form>
     </>
   );

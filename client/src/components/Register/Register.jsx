@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Alert from "../UI_Components/Alert/Alert";
 import Loading from "../UI_Components/Loading/Loading";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 const Register = (props) => {
@@ -172,6 +172,11 @@ const Register = (props) => {
         >
           Register
         </Button>
+        <h4
+          style={{ textAlign: "center", margin: "1rem 0", fontSize: "1.3rem" }}
+        >
+          If registered then please <NavLink to="/login">login</NavLink>
+        </h4>
       </form>
     </>
   );

@@ -1,0 +1,23 @@
+.activeLink{
+    color: cyan !important;
+}
+.AppLogo{
+    width:3%;
+    border-radius:50%;
+    margin:0 1rem;
+}
+@media (max-width:773px){
+    .AppLogo{
+        width: 5%;
+    }
+}
+@media (max-width:505px){
+    .AppLogo{
+        width: 7%;
+    }
+}
+@media (max-width:409px){
+    .AppLogo{
+        width: 10%;
+    }
+}

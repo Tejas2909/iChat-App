@@ -1,38 +1,57 @@
-.registerForm{
-    padding:1rem 5rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 40%;
-    display:flex;
-    flex-direction:column;
-    border-radius: 1rem;
-    box-shadow: 0.2px 0.2px 5px 7px rgba(0,0,0,0.05);
+.registerForm {
+  padding: 1rem 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: 2rem;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0.2px 0.2px 5px 7px rgba(0, 0, 0, 0.05);
+          box-shadow: 0.2px 0.2px 5px 7px rgba(0, 0, 0, 0.05);
 }
-.textField{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin:0;
+
+.textField {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+  margin: 0;
 }
-@media(max-width:1194px){
-    .registerForm{
-        width:50%;
-    }
+
+@media (max-width: 1194px) {
+  .registerForm {
+    width: 50%;
+  }
 }
-@media(max-width:935px){
-    .registerForm{
-        width:60%;
-    }
+
+@media (max-width: 935px) {
+  .registerForm {
+    width: 60%;
+  }
 }
-@media(max-width:639px){
-    .registerForm{
-        width:70%;
-    }
+
+@media (max-width: 639px) {
+  .registerForm {
+    width: 70%;
+  }
 }
-@media(max-width:474px){
-    .registerForm{
-        width:80%;
-    }
+
+@media (max-width: 474px) {
+  .registerForm {
+    width: 80%;
+  }
 }
+/*# sourceMappingURL=Register.css.map */

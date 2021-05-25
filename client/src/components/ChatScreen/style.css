@@ -1,129 +1,189 @@
-.mainChatSection::before{
-    content:"";
-    position:absolute;
-    top: 0;
-    left: 0;
-    width:100%;
-    height:100%;
-    background:linear-gradient(rgb(71, 138, 245),rgba(49, 32, 201));
-    z-index: -1;
+.mainChatSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(71, 138, 245, 0.8)), to(rgba(49, 32, 201, 0.8)));
+  background: linear-gradient(rgba(71, 138, 245, 0.8), rgba(49, 32, 201, 0.8));
+  z-index: -1;
 }
-.mainChatSection{
-width:100%;
-height:100vh;
-position: absolute !important;
-z-index: -1;
+
+.mainChatSection {
+  width: 100%;
+  height: 100vh;
+  position: absolute !important;
+  z-index: -1;
 }
-::placeholder{
-   font-size:1rem;
+
+::-webkit-input-placeholder {
+  font-size: 1rem;
 }
-.innerChatSection{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-width:100%;
-height:90.6vh;
-position: relative;
+
+:-ms-input-placeholder {
+  font-size: 1rem;
 }
-.messageBox{
-    width:80%;
-    margin:1rem 0 0 0;
-    flex:1;
-    border: 1px solid #fff;
-    border-radius:10px;
-    overflow-y: auto;
+
+::-ms-input-placeholder {
+  font-size: 1rem;
 }
-.bottomBox{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    width:80%;
+
+::placeholder {
+  font-size: 1rem;
 }
-.form-input{
-    width:97%;
-    padding:0.3rem 0rem 0.3rem 1rem;
-    background-color:white;
-    border-radius:10rem;
+
+.innerChatSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 90.6vh;
+  position: relative;
 }
-.textField{
-margin:1rem 0.3rem 1rem 0;
-flex:1;
+
+.messageBox {
+  width: 80%;
+  margin: 1rem 0 0 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  overflow-y: auto;
 }
-.sendButton{
-    border-radius:50%;
-    padding:0.7rem;
-    outline: none;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border: none;
-    color:white;
-    background-color:#f50057;
+
+.bottomBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 80%;
 }
-.user{
-background-color:#1c1db4;
-margin:1.7rem 1.4rem!important;
-padding:0.7rem 1.2rem!important;
-border-radius : 0.4rem !important;
-color:white;
-width: fit-content;
-float:right;
-clear: both;
-font-weight: bolder;
-max-width: 40%;
-word-break: break-all
+
+.form-input {
+  width: 97%;
+  padding: 0.3rem 0rem 0.3rem 1rem;
+  background-color: white;
+  border-radius: 10rem;
 }
-.other-user{
-    background-color: #dc049d;
-    margin:1.7rem 1.4rem!important;
-    border-radius : 0.4rem !important;
-    color:white;
-    width: fit-content;
-    float:left;
-    clear: both;
-    font-weight: bolder;
-    max-width: 40%;
-    word-break: break-all
+
+.textField {
+  margin: 1rem 0.3rem 1rem 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
-.scrollDown{
-    position:absolute;
-    bottom:2rem;
-    padding:0.3rem;
-    right: 2rem;
-    font-size: 2rem !important;
-    color:white !important;
-    background-color:#f50057!important;
-    border-radius:50%;
+
+.sendButton {
+  border-radius: 50%;
+  padding: 0.7rem;
+  outline: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: none;
+  color: white;
+  background-color: #f50057;
 }
-.scrollDown:hover{
-    cursor: pointer;
+
+.user {
+  background-color: #1c1db4;
+  margin: 1.7rem 1.4rem !important;
+  padding: 0.7rem 1.2rem !important;
+  border-radius: 0.4rem !important;
+  color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  float: right;
+  clear: both;
+  font-weight: bolder;
+  max-width: 40%;
+  word-break: break-all;
 }
-.notification{
-    background-color: rgb(57 146 217);
-    margin:1.7rem auto!important;
-    padding:0.7rem 1.2rem!important;
-    border-radius : 0.4rem !important;
-    color:white;
-    display:block;
-    width: fit-content;
-    margin:auto;
-    text-align:center;
-    clear: both;
-    font-weight: bolder;
+
+.other-user {
+  background-color: #dc049d;
+  margin: 1.7rem 1.4rem !important;
+  border-radius: 0.4rem !important;
+  color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  float: left;
+  clear: both;
+  font-weight: bolder;
+  max-width: 40%;
+  word-break: break-all;
 }
+
+.scrollDown {
+  position: absolute;
+  bottom: 2rem;
+  padding: 0.3rem;
+  right: 2rem;
+  font-size: 2rem !important;
+  color: white !important;
+  background-color: #f50057 !important;
+  border-radius: 50%;
+}
+
+.scrollDown:hover {
+  cursor: pointer;
+}
+
+.notification {
+  background-color: #3992d9;
+  margin: 1.7rem auto !important;
+  padding: 0.7rem 1.2rem !important;
+  border-radius: 0.4rem !important;
+  color: white;
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  clear: both;
+  font-weight: bolder;
+}
+
 /* ScrollBar styling */
 .messageBox::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 .messageBox::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
 .messageBox::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
+
 /* ScrollBar styling */
+/*# sourceMappingURL=style.css.map */
