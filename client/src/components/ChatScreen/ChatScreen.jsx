@@ -29,7 +29,6 @@ const ChatScreen = (props) => {
     if (messageBox !== null) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
-    setIsLoading(0);
   }, [messages]);
   useEffect(() => {
     socket.on("recieve-error", (msg) => {
@@ -79,7 +78,9 @@ const ChatScreen = (props) => {
           },
         });
         setMessages(res.data.messages);
-
+        if (res.data.status === 200) {
+          setIsLoading(0);
+        }
         history.push("/chat_screen");
       } catch (err) {
         props.setAlert("something went wrong");
