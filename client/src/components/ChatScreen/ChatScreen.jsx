@@ -18,6 +18,10 @@ const ChatScreen = (props) => {
   const [messages, setMessages] = useState([]);
   const [buttonVisibility, setButtonVisibility] = useState(0);
   useEffect(() => {
+    const audio = new Audio(ding);
+    audio.pause();
+  }, [messages]);
+  useEffect(() => {
     if (message.length > 0) {
       setButtonVisibility(1);
     } else {
@@ -34,21 +38,30 @@ const ChatScreen = (props) => {
     socket.emit("user-joined", props.username);
   }, []);
   useEffect(() => {
+    socket.on("active-users", (users) => {
+      console.log(users);
+    });
+  });
+  useEffect(() => {
     socket.on("user-left", (name) => {
-      const msg = {
-        username: "notification",
-        message: `${name} left the chat`,
-      };
-      setMessages([...messages, msg]);
+      if (name !== null) {
+        const msg = {
+          username: "notification",
+          message: `${name} left the chat`,
+        };
+        setMessages([...messages, msg]);
+      }
     });
   });
   useEffect(() => {
     socket.on("new-user-joined", (name) => {
-      const msg = {
-        username: "notification",
-        message: `${name} joined the chat`,
-      };
-      setMessages([...messages, msg]);
+      if (name !== null) {
+        const msg = {
+          username: "notification",
+          message: `${name} joined the chat`,
+        };
+        setMessages([...messages, msg]);
+      }
     });
   });
   useEffect(() => {

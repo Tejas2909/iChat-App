@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
   rooms: [
     {
       room: {
-        type: String,
+        type: Object,
         required: true,
       },
     },

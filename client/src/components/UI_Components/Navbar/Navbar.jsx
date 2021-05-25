@@ -12,8 +12,6 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Logo from "../../../assets/images/Logo.png";
 import { NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
-import Loading from "../Loading/Loading";
-
 import "./Navbar.css";
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -85,6 +83,7 @@ export default function PrimarySearchAppBar(props) {
   const [isLoading, setIsLoading] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const toggleDrawer = () => {};
   const Logout = async () => {
     setIsLoading(1);
     const res = await axios.post("/api/logout", {
@@ -229,6 +228,7 @@ export default function PrimarySearchAppBar(props) {
       <AppBar position="static">
         <Toolbar>
           <IconButton
+            onClick={toggleDrawer}
             edge="start"
             className={classes.menuButton}
             color="inherit"
@@ -239,7 +239,7 @@ export default function PrimarySearchAppBar(props) {
           <img className="AppLogo" src={Logo} />
           <Typography className={classes.title} variant="h6" noWrap>
             {props.username ? <>Welcome {props.username} to </> : null}
-            Chat Application
+            iChat Application
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

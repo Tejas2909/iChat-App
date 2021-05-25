@@ -7,6 +7,7 @@ const sockets = (server) => {
     socket.on("user-joined", (name) => {
       users[socket.id] = name;
       socket.broadcast.emit("new-user-joined", name);
+      io.sockets.emit("active-users", users);
     });
     socket.on("send-message", (msg) => {
       if (msg.username !== null || msg !== undefined) {
@@ -26,6 +27,7 @@ const sockets = (server) => {
     });
     socket.on("disconnect", () => {
       socket.broadcast.emit("user-left", users[socket.id]);
+      delete users[socket.id];
     });
   });
 };
