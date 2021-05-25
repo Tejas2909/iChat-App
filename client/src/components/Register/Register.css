@@ -48,10 +48,4 @@
     width: 70%;
   }
 }
-
-@media (max-width: 474px) {
-  .registerForm {
-    width: 80%;
-  }
-}
 /*# sourceMappingURL=Register.css.map */

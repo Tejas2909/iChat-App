@@ -31,6 +31,27 @@ const ChatScreen = (props) => {
     }
   }, [messages]);
   useEffect(() => {
+    socket.emit("user-joined", props.username);
+  }, []);
+  useEffect(() => {
+    socket.on("user-left", (name) => {
+      const msg = {
+        username: "notification",
+        message: `${name} left the chat`,
+      };
+      setMessages([...messages, msg]);
+    });
+  });
+  useEffect(() => {
+    socket.on("new-user-joined", (name) => {
+      const msg = {
+        username: "notification",
+        message: `${name} joined the chat`,
+      };
+      setMessages([...messages, msg]);
+    });
+  });
+  useEffect(() => {
     socket.on("recieve-error", (msg) => {
       if (msg.username === "error") {
         props.setAlert("something went wrong");
@@ -104,6 +125,8 @@ const ChatScreen = (props) => {
                 return null;
               } else if (message.username === props.username) {
                 return <div className="user">{message.message}</div>;
+              } else if (message.username === "notification") {
+                return <div className="notification">{message.message}</div>;
               } else {
                 return (
                   <div className="other-user">
