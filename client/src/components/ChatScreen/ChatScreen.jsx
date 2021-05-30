@@ -38,11 +38,6 @@ const ChatScreen = (props) => {
     socket.emit("user-joined", props.username);
   }, []);
   useEffect(() => {
-    socket.on("active-users", (users) => {
-      console.log(users);
-    });
-  });
-  useEffect(() => {
     socket.on("user-left", (name) => {
       if (name !== null) {
         const msg = {
@@ -121,6 +116,10 @@ const ChatScreen = (props) => {
       }
     }
   };
+  const onMessageScroll = () => {
+    const messageBox = document.getElementById("messageBox");
+    console.log(messageBox);
+  };
   useEffect(() => {
     getChatData();
   }, []);
@@ -132,7 +131,12 @@ const ChatScreen = (props) => {
       <div className="mainChatSection">
         <div className="innerChatSection">
           <ArrowDropDownIcon onClick={scrollDown} className="scrollDown" />
-          <div id="messageBox" className="messageBox">
+          <div
+            onScroll={onMessageScroll}
+            className=""
+            id="messageBox"
+            className="messageBox"
+          >
             {messages.map((message) => {
               if (message === undefined || message === null) {
                 return null;

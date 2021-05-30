@@ -107,6 +107,7 @@ const Register = (props) => {
                   position: "absolute",
                   bottom: "-0.2rem",
                   color: "red",
+                  fontWeight: "bold",
                 }}
               >
                 Username field is required
@@ -132,6 +133,7 @@ const Register = (props) => {
                   position: "absolute",
                   bottom: "-0.2rem",
                   color: "red",
+                  fontWeight: "bold",
                 }}
               >
                 Password field is required
@@ -157,6 +159,7 @@ const Register = (props) => {
                   position: "absolute",
                   bottom: "-0.2rem",
                   color: "red",
+                  fontWeight: "bold",
                 }}
               >
                 Confirm Password field is required

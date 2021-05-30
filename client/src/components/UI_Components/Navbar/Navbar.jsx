@@ -11,6 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Logo from "../../../assets/images/Logo.png";
 import { NavLink, useHistory } from "react-router-dom";
+import DialogBox from "../DialogBox/DialogBox";
 import axios from "axios";
 import "./Navbar.css";
 const useStyles = makeStyles((theme) => ({
@@ -80,6 +81,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const [isLoading, setIsLoading] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -242,7 +252,14 @@ export default function PrimarySearchAppBar(props) {
             iChat Application
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            className={classes.sectionDesktop}
+          >
             {!props.isAuthenticated ? (
               <>
                 <IconButton aria-label="show 4 new mails" color="inherit">
@@ -274,6 +291,20 @@ export default function PrimarySearchAppBar(props) {
               </>
             ) : (
               <>
+                <DialogBox
+                  username={props.username}
+                  open={open}
+                  handleClose={handleClose}
+                  handleClickOpen={handleClickOpen}
+                  title="Create Room"
+                />
+                <DialogBox
+                  username={props.username}
+                  open={open}
+                  handleClose={handleClose}
+                  handleClickOpen={handleClickOpen}
+                  title="Join Room"
+                />
                 <NavLink
                   to="/chat_screen"
                   style={{
