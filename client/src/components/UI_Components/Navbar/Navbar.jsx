@@ -11,7 +11,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Logo from "../../../assets/images/Logo.png";
 import { NavLink, useHistory } from "react-router-dom";
-import DialogBox from "../DialogBox/DialogBox";
 import axios from "axios";
 import "./Navbar.css";
 const useStyles = makeStyles((theme) => ({
@@ -291,20 +290,6 @@ export default function PrimarySearchAppBar(props) {
               </>
             ) : (
               <>
-                <DialogBox
-                  username={props.username}
-                  open={open}
-                  handleClose={handleClose}
-                  handleClickOpen={handleClickOpen}
-                  title="Create Room"
-                />
-                <DialogBox
-                  username={props.username}
-                  open={open}
-                  handleClose={handleClose}
-                  handleClickOpen={handleClickOpen}
-                  title="Join Room"
-                />
                 <NavLink
                   to="/chat_screen"
                   style={{
