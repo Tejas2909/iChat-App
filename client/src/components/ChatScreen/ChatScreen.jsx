@@ -29,7 +29,8 @@ const ChatScreen = (props) => {
     }
   }, [message]);
   useEffect(() => {
-    const messageBox = document.getElementById("messageBox");
+    const messageBox = document.getElementById("messageBoxId");
+    console.log(messageBox);
     if (messageBox !== null) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
@@ -76,7 +77,7 @@ const ChatScreen = (props) => {
     });
   });
   const scrollDown = () => {
-    const messageBox = document.getElementById("messageBox");
+    const messageBox = document.getElementById("messageBoxId");
     if (messageBox !== null) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
@@ -133,7 +134,7 @@ const ChatScreen = (props) => {
           <ArrowDropDownIcon onClick={scrollDown} className="scrollDown" />
           <div
             onScroll={onMessageScroll}
-            id="messageBox"
+            id="messageBoxId"
             className="messageBox"
           >
             {messages.map((message) => {
@@ -181,6 +182,7 @@ const ChatScreen = (props) => {
               <div className="textField">
                 <div className="form-input">
                   <input
+                    required
                     onChange={(event) => {
                       setMessage(event.target.value);
                     }}
