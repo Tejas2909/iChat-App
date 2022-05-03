@@ -133,7 +133,6 @@ const ChatScreen = (props) => {
           <ArrowDropDownIcon onClick={scrollDown} className="scrollDown" />
           <div
             onScroll={onMessageScroll}
-            className=""
             id="messageBox"
             className="messageBox"
           >
@@ -182,7 +181,6 @@ const ChatScreen = (props) => {
               <div className="textField">
                 <div className="form-input">
                   <input
-                    className="messageInputField"
                     onChange={(event) => {
                       setMessage(event.target.value);
                     }}
@@ -198,7 +196,7 @@ const ChatScreen = (props) => {
                       fontSize: "1rem",
                     }}
                     type="text"
-                    className="form-control"
+                    className="messageInputField form-control"
                     id="exampleInputPassword1"
                     placeholder="Enter your message..."
                   />

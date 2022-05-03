@@ -49,14 +49,16 @@ const Login = (props) => {
     };
     setIsLoading(1);
     try {
-      const res = await axios.post("/api/login", data, {
+      const res = await axios.post("api/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+      console.log(res);
       if (res.data.status === 200) {
         props.setIsAuthenticated(true);
         history.push("/");
+        console.log(res);
         props.setAlert("Login Successful");
         props.setUsername(res.data.msg.username);
         props.setToken(res.data.token);
