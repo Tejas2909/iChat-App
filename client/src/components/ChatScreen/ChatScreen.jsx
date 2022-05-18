@@ -18,6 +18,7 @@ const ChatScreen = (props) => {
   const [messages, setMessages] = useState([]);
   const [buttonVisibility, setButtonVisibility] = useState(0);
   useEffect(() => {
+    const messageBox = document.getElementById("messageBoxId");
     const audio = new Audio(ding);
     audio.pause();
   }, [messages]);
@@ -30,52 +31,44 @@ const ChatScreen = (props) => {
   }, [message]);
   useEffect(() => {
     const messageBox = document.getElementById("messageBoxId");
-    console.log(messageBox);
     if (messageBox !== null) {
       messageBox.scrollTop = messageBox.scrollHeight;
     }
   }, [messages]);
+  socket.on("user-left", (name) => {
+    if (name !== null) {
+      const msg = {
+        username: "notification",
+        message: `${name} left the chat`,
+      };
+      setMessages([...messages, msg]);
+    }
+  });
+  socket.on("new-user-joined", (name) => {
+    if (name !== null) {
+      const msg = {
+        username: "notification",
+        message: `${name} joined the chat`,
+      };
+      setMessages([...messages, msg]);
+    }
+  });
+  socket.on("recieve-error", (msg) => {
+    if (msg.username === "error") {
+      props.setAlert("something went wrong");
+    }
+  });
+  socket.on("recieve-message", (msg) => {
+    if (msg.username !== null) {
+      const audio = new Audio(ding);
+      audio.play();
+      setMessages([...messages, msg]);
+    }
+  });
   useEffect(() => {
     socket.emit("user-joined", props.username);
   }, []);
-  useEffect(() => {
-    socket.on("user-left", (name) => {
-      if (name !== null) {
-        const msg = {
-          username: "notification",
-          message: `${name} left the chat`,
-        };
-        setMessages([...messages, msg]);
-      }
-    });
-  });
-  useEffect(() => {
-    socket.on("new-user-joined", (name) => {
-      if (name !== null) {
-        const msg = {
-          username: "notification",
-          message: `${name} joined the chat`,
-        };
-        setMessages([...messages, msg]);
-      }
-    });
-  });
-  useEffect(() => {
-    socket.on("recieve-error", (msg) => {
-      if (msg.username === "error") {
-        props.setAlert("something went wrong");
-      }
-    });
-  });
-  useEffect(() => {
-    socket.on("recieve-message", (msg) => {
-      if (msg.username !== null) {
-        const audio = new Audio(ding);
-        audio.play();
-        setMessages([...messages, msg]);
-      }
-    });
-  });
+  useEffect(() => {});
   const scrollDown = () => {
     const messageBox = document.getElementById("messageBoxId");
     if (messageBox !== null) {
